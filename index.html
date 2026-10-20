@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Feliz aniversário ❤</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Lato:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #1a1a1a;
+        --red: #c8102e;
+        --red-soft: #e8586d;
+        --pink: #ffc2cf;
+        --line: #f1d9de;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Lato", Arial, sans-serif;
+        font-weight: 300;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      h1,
+      h2 {
+        font-family: "Playfair Display", Georgia, serif;
+        font-weight: 700;
+        line-height: 1.15;
+      }
+      section {
+        position: relative;
+        z-index: 1;
+        padding: 90px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(2.6rem, 9vw, 5.5rem);
+        color: var(--text);
+      }
+      .hero h1 em {
+        color: var(--red);
+        font-style: italic;
+      }
+      .hero p {
+        margin-top: 22px;
+        font-size: 1.2rem;
+        color: var(--red-soft);
+      }
+      .hero h1 span {
+        color: var(--red);
+      }
+      .scroll {
+        margin-top: 50px;
+        color: var(--red);
+        font-size: 1.6rem;
+        animation: bob 1.8s ease-in-out infinite;
+      }
+      @keyframes bob {
+        50% {
+          transform: translateY(10px);
+        }
+      }
+      h2 {
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+        margin-bottom: 12px;
+      }
+      h2 span {
+        color: var(--red);
+      }
+      .sub {
+        color: #666;
+        margin-bottom: 50px;
+      }
+
+      /* corações caindo */
+      #hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .heart {
+        position: absolute;
+        top: -40px;
+        animation: fall linear forwards;
+        opacity: 0.8;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(115vh) rotate(40deg);
+          opacity: 0;
+        }
+      }
+
+      /* linha do tempo */
+      .timeline {
+        position: relative;
+        display: grid;
+        gap: 60px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--line);
+      }
+      .moment {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        position: relative;
+      }
+      .moment::after {
+        content: "❤";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        color: var(--red);
+        padding: 4px 0;
+        font-size: 1.1rem;
+      }
+      .moment:nth-child(even) .photo {
+        order: 2;
+      }
+      .moment:nth-child(even) .caption {
+        order: 1;
+        text-align: right;
+      }
+      .photo img {
+        width: 100%;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 8px solid #fff;
+        box-shadow: 0 8px 28px rgba(200, 16, 46, 0.15);
+      }
+      .caption {
+        text-align: left;
+      }
+      .caption h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--red);
+        margin-bottom: 6px;
+      }
+      .caption small {
+        color: #888;
+      }
+      @media (max-width: 700px) {
+        .timeline::before,
+        .moment::after {
+          display: none;
+        }
+        .moment {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .moment:nth-child(even) .photo,
+        .moment:nth-child(even) .caption {
+          order: unset;
+          text-align: left;
+        }
+      }
+
+      /* carrossel */
+      .carousel {
+        position: relative;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+      .track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        border-radius: 8px;
+      }
+      .track::-webkit-scrollbar {
+        display: none;
+      }
+      .track img {
+        flex: 0 0 100%;
+        width: 100%;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+        scroll-snap-align: center;
+      }
+      .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--red);
+        font-size: 1.3rem;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+      .arrow:focus-visible {
+        outline: 2px solid var(--red);
+      }
+      .prev {
+        left: 10px;
+      }
+      .next {
+        right: 10px;
+      }
+      .dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 18px;
+      }
+      .dots i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--line);
+        transition: 0.3s;
+      }
+      .dots i.on {
+        background: var(--red);
+        transform: scale(1.4);
+      }
+
+      /* final */
+      .final {
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .final h2 {
+        font-size: clamp(2.4rem, 8vw, 4.8rem);
+      }
+      .final .big {
+        font-size: 4rem;
+        color: var(--red);
+        animation: beat 1.2s infinite;
+      }
+      .final p {
+        max-width: 820px;
+        margin-top: 24px;
+        color: #555;
+        font-size:1.15rem;
+        line-height: 1.9
+      }
+      @keyframes beat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        20% {
+          transform: scale(1.25);
+        }
+        40% {
+          transform: scale(1);
+        }
+        60% {
+          transform: scale(1.15);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hearts" aria-hidden="true"></div>
+
+    <section class="hero">
+      <h1>Feliz <em>aniversário</em>,<br />Meu <span>amor</span>.</h1>
+      <p>20 de outubro</p>
+      <div class="scroll">↓</div>
+    </section>
+
+    <section>
+      <h2>Nossa <span>história</span></h2>
+      <p class="sub">Cada foto, representa um pedacinho de nós dois.</p>
+      <div class="timeline">
+        <div class="moment">
+          <div class="photo">
+            <img class="image" src="fotos/nos-1.jpg" alt="Nós dois" />
+          </div>
+          <div class="caption">
+            <h3>Quando tudo começou</h3>
+            <p>
+              A primeira vez em que a gente ficou junto, eu sempre amei seus
+              olhos, seu cabelo, tudo em você desde a primeira vez. Eu sabia que
+              a nossa história não seria algo passageiro, e sim para sempre! Eu
+              te amo muito.
+            </p>
+            <small>10/2022</small>
+          </div>
+        </div>
+        <div class="moment">
+          <div class="photo">
+            <img class="image" src="fotos/nos-2.jpg" alt="Nós dois" />
+          </div>
+          <div class="caption">
+            <h3>Nossa primeira viagem</h3>
+            <p>
+              Nossa primeira vez viajando juntos, lá para fortaleza, conhecendo
+              um lugar novo e juntos. Nessa viagem e em todos os nossos dias
+              juntos, eu tenho certeza de que escolhi a pessoa certa para a
+              minha vida!
+            </p>
+            <small>07/2023</small>
+          </div>
+        </div>
+        <div class="moment">
+          <div class="photo">
+            <img class="image" src="fotos/nos-3.jpg" alt="Nós dois" />
+          </div>
+          <div class="caption">
+            <h3>Você é a mulher mais linda</h3>
+            <small>07/2023</small>
+          </div>
+        </div>
+        <div class="moment">
+          <div class="photo">
+            <img class="image" src="fotos/nos-6.jpg" alt="Nós dois" />
+          </div>
+          <div class="caption">
+            <h3>Quem eu quero desde o inicio!</h3>
+            <small>12/2022</small>
+          </div>
+        </div>
+        <div class="moment">
+          <div class="photo">
+            <img class="image" src="fotos/nos-5.jpeg" alt="Nós dois" />
+          </div>
+          <div class="caption">
+            <h3>Mesmo eu com o cabelo sofrido KKKKK</h3>
+            <small>11/2022</small>
+          </div>
+        </div>
+        <div class="moment">
+          <div class="photo">
+            <img class="image" src="fotos/nos-4.jpg" alt="Nós dois" />
+          </div>
+          <div class="caption">
+            <h3>Nós</h3>
+            <p>
+              E é você quem eu quero e sempre vou querer pro resto da minha
+              vida!
+            </p>
+            <small>10/2024</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Você é a mulher mais <span>linda</span></h2>
+      <p class="sub">
+        Você é toda linda, minha querida; em você não há defeito algum. -
+        Cânticos 4:7
+      </p>
+      <div class="carousel">
+        <div class="track" id="track">
+          <img src="fotos/ela-1.jpg" alt="Foto do meu amor" />
+          <img src="fotos/ela-2.jpg" alt="Foto do meu amor" />
+          <img src="fotos/ela-3.jpg" alt="Foto do meu amor" />
+          <img src="fotos/ela-4.webp" alt="Foto do meu amor" />
+          <img src="fotos/ela-5.webp" alt="Foto do meu amor" />
+          <img src="fotos/ela-6.jpg" alt="Foto do meu amor" />
+          <img src="fotos/ela-7.jpg" alt="Foto do meu amor" />
+          <img src="fotos/ela-8.jpg" alt="Foto do meu amor" />
+        </div>
+        <button class="arrow prev" id="prev" aria-label="Foto anterior">
+          ❮
+        </button>
+        <button class="arrow next" id="next" aria-label="Próxima foto">
+          ❯
+        </button>
+        <div class="dots" id="dots"></div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="big">❤</div>
+      <h2>Feliz aniversário,<br /><span>meu amor</span></h2>
+      <p >
+        Quem diria né, seu namorado um dev e nunca fez um site para você? Eu te amo muito meu amor, que Deus abençoe esses seus 20 anos, você é uma mulher virtuosa e a mais bela entre todas as outras. Eu amo cada detalhe seu, e o meu maior desejo é poder casar e construir uma familia com você. Obrigado por ser uma mulher muito parceira e que sempre está comigo em todos os momentos, espero um dia poder te proporcionar tudo que você merece, eu amo muito você!
+      </p>
+    </section>
+
+    <script>
+      document.querySelectorAll("img").forEach((img) => {
+        img.addEventListener(
+          "error",
+          () => {
+            img.src =
+              "data:image/svg+xml;utf8," +
+              encodeURIComponent(
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><rect width="400" height="500" fill="#fff0f3"/><text x="200" y="280" font-size="120" text-anchor="middle" fill="#ffc2cf">❤</text></svg>',
+              );
+          },
+          { once: true },
+        );
+      });
+
+      const box = document.getElementById("hearts");
+      const colors = ["#c8102e", "#e8586d", "#ffc2cf", "#ffffff"];
+      function drop() {
+        const h = document.createElement("span");
+        h.className = "heart";
+        h.textContent = "❤";
+        const c = colors[Math.floor(Math.random() * colors.length)];
+        h.style.cssText =
+          `left:${Math.random() * 100}vw;font-size:${12 + Math.random() * 24}px;color:${c};animation-duration:${6 + Math.random() * 7}s;` +
+          (c === "#ffffff"
+            ? "text-shadow:0 0 2px #e8586d,0 0 4px #e8586d;"
+            : "");
+        box.appendChild(h);
+        setTimeout(() => h.remove(), 14000);
+      }
+      setInterval(drop, 450);
+      for (let i = 0; i < 10; i++) setTimeout(drop, i * 150);
+
+      const track = document.getElementById("track");
+      const imgs = track.querySelectorAll("img");
+      const dots = document.getElementById("dots");
+      imgs.forEach(() => dots.appendChild(document.createElement("i")));
+      const dotEls = dots.querySelectorAll("i");
+      let idx = 0;
+      function go(i) {
+        idx = (i + imgs.length) % imgs.length;
+        track.scrollTo({ left: idx * track.clientWidth, behavior: "smooth" });
+      }
+      function mark() {
+        idx = Math.round(track.scrollLeft / track.clientWidth);
+        dotEls.forEach((d, i) => d.classList.toggle("on", i === idx));
+      }
+      track.addEventListener("scroll", mark);
+      document.getElementById("prev").onclick = () => go(idx - 1);
+      document.getElementById("next").onclick = () => go(idx + 1);
+      mark();
+      setInterval(() => go(idx + 1), 5000);
+    </script>
+  </body>
+</html>
